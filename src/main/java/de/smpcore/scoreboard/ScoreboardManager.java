@@ -2,14 +2,15 @@ package de.smpcore.scoreboard;
 
 import de.smpcore.SMPCore;
 import de.smpcore.data.PlayerData;
-import de.smpcore.economy.EconomyManager;
 import de.smpcore.util.Msg;
-import de.smpcore.util.Num;
+import de.smpcore.util.Placeholders;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,13 @@ public final class ScoreboardManager {
     public void shutdown() {
         if (task != null) task.cancel();
         for (Player p : Bukkit.getOnlinePlayers()) remove(p);
+    }
+
+    /** Alle aktiven Spieler-Scoreboards (für die TAB-Sortierung). */
+    public Collection<Scoreboard> boards() {
+        List<Scoreboard> l = new ArrayList<>();
+        for (Board b : boards.values()) l.add(b.sb());
+        return l;
     }
 
     public void remove(Player p) {
@@ -69,36 +77,11 @@ public final class ScoreboardManager {
                 p.setScoreboard(b.sb());
             }
             Objective o = b.sb().getObjective("smp");
-            if (o != null) o.displayName(Msg.c(title));
+            if (o != null) o.displayName(Msg.c(Placeholders.apply(title, p)));
             for (int i = 0; i < n; i++) {
                 Team t = b.sb().getTeam("l" + i);
-                if (t != null) t.prefix(Msg.c(apply(lines.get(i), p, d)));
+                if (t != null) t.prefix(Msg.c(Placeholders.apply(lines.get(i), p)));
             }
         }
-    }
-
-    private String clanName(Player p) {
-        de.smpcore.clan.ClanManager.Clan c = plugin.clans().of(p.getUniqueId());
-        return c == null ? "???" : Msg.esc(c.name);
-    }
-
-    private String apply(String line, Player p, PlayerData d) {
-        double bounty = plugin.bounties().get(p.getUniqueId());
-        return line
-                .replace("%player%", Msg.esc(p.getName()))
-                .replace("%money%", EconomyManager.fmt(d.money))
-                .replace("%crystals%", Num.format(d.crystals))
-                .replace("%kills%", String.valueOf(d.kills))
-                .replace("%deaths%", String.valueOf(d.deaths))
-                .replace("%playtime%", Num.duration(d.playtime * 1000))
-                .replace("%online%", String.valueOf(Bukkit.getOnlinePlayers().size()))
-                .replace("%bounty%", bounty > 0 ? EconomyManager.fmt(bounty) : "-")
-                .replace("%ping%", String.valueOf(p.getPing()))
-                .replace("%max%", String.valueOf(Bukkit.getMaxPlayers()))
-                .replace("%rank%", plugin.ranks().rankOf(p.getUniqueId()).display)
-                .replace("%keyall%", plugin.keyall().enabled() ? Num.mmss(plugin.keyall().secondsLeft()) : "aus")
-                .replace("%gems%", Num.format(d.gems))
-                .replace("%clan%", clanName(p))
-                .replace("%server%", plugin.getConfig().getString("server-name", "SERVER"));
     }
 }
