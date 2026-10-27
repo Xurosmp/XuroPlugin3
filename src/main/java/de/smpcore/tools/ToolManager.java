@@ -59,7 +59,7 @@ public final class ToolManager {
         meta.displayName(Msg.item(t.name()));
         List<net.kyori.adventure.text.Component> lore = new ArrayList<>();
         for (String l : t.lore()) lore.add(Msg.item(l));
-        lore.add(Msg.item("<gray>Abbaufläche: <white>" + t.size() + "x" + t.size()));
+        if (t.size() > 1) lore.add(Msg.item("<gray>Abbaufläche: <white>" + t.size() + "x" + t.size()));
         meta.lore(lore);
         for (Map.Entry<String, Integer> e : t.enchants().entrySet()) {
             Enchantment en = Registry.ENCHANTMENT.get(NamespacedKey.minecraft(e.getKey().toLowerCase(Locale.ROOT)));
