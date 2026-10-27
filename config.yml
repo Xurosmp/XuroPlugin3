@@ -1,0 +1,140 @@
+# ===== SMPCore =====
+server-name: "XUROSMP"          # Platzhalter %server% im Scoreboard
+number-comma: true              # true = 48,64M (deutsch) | false = 48.64M
+
+# Chat-Prefix pro Befehl: "AH ▸", "HOME ▸" ... (maximal 4 Zeichen, MiniMessage-Farben erlaubt)
+# Bedrock-Hinweis: Falls "▸" bei Bedrock-Spielern nicht angezeigt wird, hier z.B. auf "»" ändern.
+prefix-format: "<green><bold>%tag%</bold> <dark_gray>▸ <gray>"
+prefixes:
+  default: "SMP"
+  balance: "COIN"
+  pay: "PAY"
+  eco: "ECO"
+  crystals: "KRIS"
+  gems: "GEMS"
+  gemshop: "GEMS"
+  afk: "AFK"
+  clan: "CLAN"
+  top: "TOP"
+  shop: "SHOP"
+  sell: "SELL"
+  crystalshop: "KRIS"
+  ah: "AH"
+  bounty: "BNTY"
+  crate: "KEYS"
+  keyall: "KEY"
+  adminpanel: "ADM"
+  smpcore: "SMP"
+  rank: "RANK"
+  spawner: "SPWN"
+  tool: "TOOL"
+  spawn: "SPWN"
+  setspawn: "SPWN"
+  sethome: "HOME"
+  home: "HOME"
+  delhome: "HOME"
+  homes: "HOME"
+  tpa: "TPA"
+  tpaccept: "TPA"
+  tpdeny: "TPA"
+  rtp: "RTP"
+  daily: "DAY"
+  stats: "STAT"
+  scoreboard: "SB"
+
+# Floodgate/Geyser: Prefix für Bedrock-Namen (Standard ".")
+bedrock-prefix: "."
+
+# Wartungsmodus: nur Spieler mit smpcore.admin dürfen joinen (auch im Admin Panel schaltbar)
+maintenance: false
+
+chat:
+  rank-format: true   # Rang-Prefix im Chat
+
+# Features an/aus (geht auch im Admin Panel)
+features:
+  shop: true
+  auction: true
+  bounty: true
+  crates: true
+  scoreboard: true
+
+economy:
+  starting-money: 1000
+  starting-crystals: 0     # Kristalle = AFK-Währung
+  starting-gems: 0         # Gems = Store-Währung
+
+# Kristalle = AFK-Währung (verdient in der AFK-Zone, ausgegeben im Kristall-Shop /crystalshop).
+# Optional zusätzlich pro Kill / Spielzeit (Standard: aus):
+crystals:
+  per-kill: 0
+  anti-farm-minutes: 10
+  playtime-minutes: 0
+  playtime-amount: 1
+
+# AFK-Zone: Admin setzt sie mit /afk pos1, /afk pos2, /afk setspawn. Spieler kommen mit /afk hin.
+afk:
+  enabled: true
+  interval-seconds: 60     # alle X Sekunden in der Zone
+  crystals: 1              # Kristalle pro Intervall (Rang-Bonus siehe ranks.yml: afk-bonus)
+
+# Clans
+clans:
+  create-cost: 50000
+  max-members: 10
+
+# Automatischer Keyall: alle X Minuten bekommen alle Online-Spieler Keys
+keyall:
+  enabled: true
+  interval-minutes: 60
+  crate: common
+  amount: 1
+
+auction:
+  max-listings: 10          # Standard, Ränge können das in ranks.yml überschreiben
+  duration-hours: 48
+  tax-percent: 5
+  min-price: 1
+  max-price: 1000000000000
+
+bounty:
+  min-amount: 1000
+
+crates:
+  broadcast-chance-below: 5.0   # Gewinne mit weniger als X% Chance werden gebroadcastet
+
+teleport:
+  delay-seconds: 3
+
+homes:
+  max: 3                    # Standard, Ränge können das in ranks.yml überschreiben
+
+rtp:
+  world: world
+  min-radius: 500
+  max-radius: 5000
+  cooldown-seconds: 60
+
+daily:
+  money: 500
+  streak-bonus: 100      # pro Streak-Tag zusätzlich
+  max-streak: 7
+  crystals: 0          # Kristalle sind AFK-Währung, daher standardmäßig 0
+
+# Scoreboard im HugoSMP-Look
+# Platzhalter: %player% %money% %gems% %crystals% %kills% %deaths% %playtime% %online% %max% %bounty% %ping% %rank% %keyall% %clan% %server%
+scoreboard:
+  title: "<gradient:#ff5555:#ffaa00><bold>XUROSMP</bold></gradient>"
+  lines:
+    - "<green>Geld <white>%money%"
+    - "<light_purple>Gems <white>%gems%"
+    - "<yellow>Kristalle <white>%crystals%"
+    - "<red>Kills <white>%kills%"
+    - "<dark_red>Tode <white>%deaths%"
+    - "<gold>Clan <white>%clan%"
+    - "<aqua>Ping <white>%ping%ms"
+    - "<yellow>Keyall <white>%keyall%"
+    - "<green>Spielzeit <white>%playtime%"
+    - " "
+    - "<red><bold>%server%"
+    - "<green>%online%/%max%"

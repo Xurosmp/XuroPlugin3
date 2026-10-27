@@ -1,0 +1,98 @@
+name: SMPCore
+version: '${project.version}'
+main: de.smpcore.SMPCore
+api-version: '1.21'
+description: All-in-one SMP Core (Economy, Shop, AH, Bounty, Kristalle, Crates, Admin Panel)
+softdepend: [floodgate, Geyser-Spigot]
+
+commands:
+  balance:
+    description: Zeigt dein Geld
+    aliases: [bal, money]
+  pay:
+    description: Geld an Spieler senden
+  eco:
+    description: Economy Admin
+    permission: smpcore.admin
+  crystals:
+    description: Kristalle anzeigen/verwalten
+    aliases: [kristalle, shards]
+  top:
+    description: Bestenlisten
+    aliases: [baltop, leaderboard]
+  shop:
+    description: Öffnet den Shop
+  sell:
+    description: Items verkaufen (hand/all)
+  crystalshop:
+    description: Kristall-Shop
+    aliases: [cshop, shardshop]
+  ah:
+    description: Auktionshaus
+    aliases: [auctionhouse, auction]
+  bounty:
+    description: Kopfgelder
+    aliases: [bounties]
+  crate:
+    description: Crates & Keys
+    aliases: [crates]
+  adminpanel:
+    description: Admin Panel
+    aliases: [ap]
+    permission: smpcore.admin
+  spawn:
+    description: Zum Spawn
+  setspawn:
+    description: Spawn setzen
+    permission: smpcore.admin
+  sethome:
+    description: Home setzen
+  home:
+    description: Zu einem Home
+  delhome:
+    description: Home löschen
+  homes:
+    description: Homes Menü
+  tpa:
+    description: Teleport-Anfrage
+  tpaccept:
+    description: Teleport-Anfrage annehmen
+  tpdeny:
+    description: Teleport-Anfrage ablehnen
+  rtp:
+    description: Zufälliger Teleport
+  daily:
+    description: Tägliche Belohnung
+  stats:
+    description: Statistiken
+  scoreboard:
+    description: Scoreboard an/aus
+    aliases: [sb]
+  smpcore:
+    description: Plugin Verwaltung
+  rank:
+    description: Ränge verwalten
+  gems:
+    description: Gems (Store-Währung) anzeigen/verwalten
+  gemshop:
+    description: Gem-Shop
+  afk:
+    description: AFK-Zone (Kristalle verdienen)
+  clan:
+    description: Clan-System
+  spawner:
+    description: Smart-Spawner geben (Admin)
+    permission: smpcore.admin
+  tool:
+    description: Spezial-Tools geben (Admin)
+    permission: smpcore.admin
+  keyall:
+    description: Keyall-Timer anzeigen / steuern
+
+permissions:
+  smpcore.admin:
+    description: Admin-Rechte
+    default: op
+  smpcore.tp.bypass:
+    description: Teleport ohne Wartezeit
+    default: op

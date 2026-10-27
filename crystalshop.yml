@@ -1,0 +1,10 @@
+# KRISTALL-SHOP (AFK-Währung): /crystalshop - Kristalle verdient man in der AFK-Zone (/afk).
+# type: KEY (value = Crate-ID) | MONEY (value = Betrag) | ITEM (value = Material) | COMMAND (value = Befehl, %player%)
+items:
+  - {icon: TRIPWIRE_HOOK, name: "<green>Common Key", cost: 20, type: KEY, value: common, amount: 1, lore: ["<gray>Schlüssel für die Common Crate"]}
+  - {icon: TRIPWIRE_HOOK, name: "<aqua>Rare Key", cost: 80, type: KEY, value: rare, amount: 1, lore: ["<gray>Schlüssel für die Rare Crate"]}
+  - {icon: GOLD_INGOT, name: "<gold>$25.000", cost: 15, type: MONEY, value: "25000", amount: 1, lore: ["<gray>Tausche Kristalle gegen Geld"]}
+  - {icon: GOLD_BLOCK, name: "<gold>$250.000", cost: 120, type: MONEY, value: "250000", amount: 1, lore: ["<gray>Tausche Kristalle gegen Geld"]}
+  - {icon: EXPERIENCE_BOTTLE, name: "<green>64 XP-Flaschen", cost: 40, type: ITEM, value: EXPERIENCE_BOTTLE, amount: 64, lore: []}
+  - {icon: GOLDEN_APPLE, name: "<gold>16 Goldene Äpfel", cost: 50, type: ITEM, value: GOLDEN_APPLE, amount: 16, lore: []}
+  - {icon: TOTEM_OF_UNDYING, name: "<yellow>Totem", cost: 60, type: ITEM, value: TOTEM_OF_UNDYING, amount: 1, lore: []}

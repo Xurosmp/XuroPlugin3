@@ -1,0 +1,61 @@
+# Ränge. prefix = Chat- und Tab-Prefix (MiniMessage), weight = Sortierung (höher = wichtiger)
+# homes / listings = Limits für Homes bzw. AH-Angebote (0 = Wert aus config.yml bzw. vom vererbten Rang)
+# afk-bonus = Prozent-Bonus auf AFK-Kristalle (wird mit vererbt)
+# permissions = Permission-Nodes dieses Ranges ("-node" entzieht eine Permission). inherits = erbt von anderen Rängen.
+# Zuweisen: /rank set <Spieler> <Rang> oder im Admin Panel (/ap -> Spieler -> Rang).
+default-rank: spieler
+ranks:
+  spieler:
+    display: "<gray>Spieler"
+    prefix: "<gray>"
+    weight: 0
+    homes: 3
+    listings: 10
+    permissions: []
+  vip:
+    display: "<green>VIP"
+    prefix: "<green>[VIP] <white>"
+    weight: 10
+    inherits: [spieler]
+    homes: 5
+    listings: 15
+    afk-bonus: 25
+    permissions: []
+  mvp:
+    display: "<aqua>MVP"
+    prefix: "<aqua>[MVP] <white>"
+    weight: 20
+    inherits: [vip]
+    homes: 8
+    listings: 20
+    afk-bonus: 50
+    permissions: []
+  helfer:
+    display: "<yellow>Helfer"
+    prefix: "<yellow>[Helfer] <white>"
+    weight: 50
+    inherits: [mvp]
+    permissions:
+      - smpcore.tp.bypass
+  mod:
+    display: "<gold>Mod"
+    prefix: "<gold>[Mod] <white>"
+    weight: 60
+    inherits: [helfer]
+    permissions: []
+  admin:
+    display: "<red>Admin"
+    prefix: "<red>[Admin] <white>"
+    weight: 90
+    inherits: [mod]
+    homes: 20
+    listings: 50
+    afk-bonus: 100
+    permissions:
+      - smpcore.admin
+  owner:
+    display: "<dark_red><bold>Owner"
+    prefix: "<dark_red><bold>[Owner] <white>"
+    weight: 100
+    inherits: [admin]
+    permissions: []

@@ -1,0 +1,28 @@
+# Spezial-Tools, die NxN Blöcke abbauen (nur ungerade Größen: 3, 5, 7, 9).
+# Sneaken = nur 1 Block. Geben: /tool give <Spieler> <id> [Anzahl]
+# material: Pickaxe/Shovel/Axe/Hoe bestimmt, welche Blöcke abgebaut werden.
+tools:
+  hammer:
+    material: NETHERITE_PICKAXE
+    name: "<red><bold>Hammer"
+    lore: ["<gray>Baut 3x3 Blöcke ab", "<dark_gray>Sneaken = nur 1 Block"]
+    size: 3
+    enchants: {EFFICIENCY: 5, UNBREAKING: 3, MENDING: 1}
+  excavator:
+    material: NETHERITE_SHOVEL
+    name: "<yellow><bold>Excavator"
+    lore: ["<gray>Gräbt 3x3 Blöcke", "<dark_gray>Sneaken = nur 1 Block"]
+    size: 3
+    enchants: {EFFICIENCY: 5, UNBREAKING: 3, MENDING: 1}
+  megahammer:
+    material: NETHERITE_PICKAXE
+    name: "<dark_red><bold>Mega-Hammer"
+    lore: ["<gray>Baut 5x5 Blöcke ab", "<dark_gray>Sneaken = nur 1 Block"]
+    size: 5
+    enchants: {EFFICIENCY: 6, UNBREAKING: 5, MENDING: 1}
+  lumberaxe:
+    material: NETHERITE_AXE
+    name: "<gold><bold>Holzfäller-Axt"
+    lore: ["<gray>Baut 3x3 Blöcke ab"]
+    size: 3
+    enchants: {EFFICIENCY: 5, UNBREAKING: 3, MENDING: 1}
