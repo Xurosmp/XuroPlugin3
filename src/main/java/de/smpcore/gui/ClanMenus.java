@@ -168,7 +168,7 @@ public final class ClanMenus {
             List<Entry> out = new ArrayList<>();
             int rank = 1;
             for (ClanManager.Clan c : plugin.clans().top()) {
-                out.add(new Entry(Items.make(Material.WHITE_BANNER, "<gold>#" + rank++ + " <yellow>" + Msg.esc(c.name) + " <dark_gray>[<yellow>" + c.tag + "<dark_gray>]",
+                out.add(new Entry(Items.make(Material.WHITE_BANNER, 1, "<gold>#" + rank++ + " <yellow>" + Msg.esc(c.name) + " <dark_gray>[<yellow>" + c.tag + "<dark_gray>]",
                         List.of("<gray>Leader: <white>" + Msg.esc(nameOf(c.leader)), "<gray>Mitglieder: <white>" + c.members.size(),
                                 "<gray>Kills: <red>" + c.kills + " <gray>Tode: <white>" + c.deaths, "<gray>Bank: <green>" + EconomyManager.fmt(c.bank))), null));
             }
