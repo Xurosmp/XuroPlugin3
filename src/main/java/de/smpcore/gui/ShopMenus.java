@@ -12,11 +12,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/** Shop im Look des HugoSMP-Shops: 3 Reihen, Kategorien mittig, kein Füll-Glas. */
+/**
+ * Shop im HugoSMP-Look: 3 Reihen, kein Füll-Glas.
+ * Hauptmenü: Kategorien mittig. Unterseite: Titel in Cyan, Items in der mittleren Reihe,
+ * rote Glasscheibe unten mittig = Zurück.
+ */
 public final class ShopMenus {
     private ShopMenus() {}
 
     public static void openMain(Player p) { new Main(p).open(); }
+
+    private static ItemStack backPane() {
+        return Items.make(Material.RED_STAINED_GLASS_PANE, "<red>Zurück");
+    }
 
     public static final class Main extends Menu {
         public Main(Player p) { super(p, 27, "Shop"); }
@@ -36,52 +44,57 @@ public final class ShopMenus {
                     set(slot, Items.make(c.icon(), c.name()));
                 } else {
                     set(slot, Items.make(c.icon(), c.name(), "<gray>" + c.items().size() + " Items", "", "<yellow>Klicken zum Öffnen"),
-                            e -> go(new Cat(viewer, c)));
+                            e -> go(new Cat(viewer, c, 0)));
                 }
             }
         }
     }
 
-    public static final class Cat extends PagedMenu {
+    /** Unterseite einer Kategorie: 9 Items pro Seite in der mittleren Reihe. */
+    public static final class Cat extends Menu {
         private final ShopManager.Category cat;
+        private final int page;
 
-        public Cat(Player p, ShopManager.Category cat) {
-            super(p, "Shop");
+        public Cat(Player p, ShopManager.Category cat, int page) {
+            super(p, 27, "<aqua>" + cat.name().replaceAll("<[^>]*>", ""));
             this.cat = cat;
+            this.page = page;
         }
 
-        @Override protected boolean filler() { return false; }
-
         @Override
-        protected List<Entry> entries() {
-            List<Entry> out = new ArrayList<>();
-            for (ShopManager.Item it : cat.items()) {
+        protected void build() {
+            List<ShopManager.Item> items = cat.items();
+            int pages = Math.max(1, (items.size() + 8) / 9);
+            int pg = Math.min(Math.max(0, page), pages - 1);
+            for (int i = 0; i < 9; i++) {
+                int idx = pg * 9 + i;
+                if (idx >= items.size()) break;
+                ShopManager.Item it = items.get(idx);
                 List<String> lore = new ArrayList<>();
                 lore.add("");
                 if (it.buy() > 0) lore.add("<gray>Kaufen: <green>" + EconomyManager.fmt(it.buy()));
                 if (it.sell() > 0) lore.add("<gray>Verkaufen: <gold>" + EconomyManager.fmt(it.sell()));
                 lore.add("");
                 lore.add("<yellow>Klicken zum Auswählen");
-                out.add(new Entry(Items.withLore(new ItemStack(it.material()), lore), e -> go(new Detail(viewer, cat, it))));
+                set(9 + i, Items.withLore(new ItemStack(it.material()), lore), e -> go(new Detail(viewer, cat, it, pg)));
             }
-            return out;
-        }
-
-        @Override
-        protected void controls() {
-            set(49, Items.make(Material.ARROW, "<red>Zurück"), e -> go(new Main(viewer)));
-            set(47, Items.make(Material.GOLD_INGOT, "<gold>Dein Geld", "<white>" + EconomyManager.fmt(plugin.economy().balance(viewer.getUniqueId()))));
+            set(22, backPane(), e -> go(new Main(viewer)));
+            if (pg > 0) set(18, Items.make(Material.ARROW, "<yellow>« Vorherige Seite"), e -> go(new Cat(viewer, cat, pg - 1)));
+            if (pg < pages - 1) set(26, Items.make(Material.ARROW, "<yellow>Nächste Seite »"), e -> go(new Cat(viewer, cat, pg + 1)));
         }
     }
 
+    /** Kauf-/Verkaufsmenü eines Items. */
     public static final class Detail extends Menu {
         private final ShopManager.Category cat;
         private final ShopManager.Item item;
+        private final int page;
 
-        public Detail(Player p, ShopManager.Category cat, ShopManager.Item item) {
-            super(p, 27, "Shop");
+        public Detail(Player p, ShopManager.Category cat, ShopManager.Item item, int page) {
+            super(p, 27, "<aqua>" + Items.pretty(item.material()));
             this.cat = cat;
             this.item = item;
+            this.page = page;
         }
 
         @Override
@@ -110,10 +123,10 @@ public final class ShopMenus {
                 }
             }
             if (item.sell() > 0) {
-                set(22, Items.make(Material.GOLD_BLOCK, "<gold><bold>Alles verkaufen", "<gray>Verkauft alle " + Items.pretty(m) + " aus deinem Inventar"),
+                set(4, Items.make(Material.GOLD_BLOCK, "<gold><bold>Alles verkaufen", "<gray>Verkauft alle " + Items.pretty(m) + " aus deinem Inventar"),
                         e -> { plugin.shop().sellItem(viewer, m, item.sell(), Integer.MAX_VALUE); refresh(); });
             }
-            set(18, Items.make(Material.ARROW, "<red>Zurück"), e -> go(new Cat(viewer, cat)));
+            set(22, backPane(), e -> go(new Cat(viewer, cat, page)));
         }
     }
 }
