@@ -26,3 +26,46 @@ tools:
     lore: ["<gray>Baut 3x3 Blöcke ab"]
     size: 3
     enchants: {EFFICIENCY: 5, UNBREAKING: 3, MENDING: 1}
+  # --- Crystal-Ausrüstung (Crystal Store, size 1 = normales Item mit Namen und Verzauberungen) ---
+  crystal_helmet:
+    material: NETHERITE_HELMET
+    name: "<light_purple><bold>Crystal Helm"
+    lore: ["<gray>Crystal-Ausrüstung"]
+    size: 1
+    enchants: {PROTECTION: 4, UNBREAKING: 3, MENDING: 1, RESPIRATION: 3, AQUA_AFFINITY: 1}
+  crystal_chestplate:
+    material: NETHERITE_CHESTPLATE
+    name: "<light_purple><bold>Crystal Brustplatte"
+    lore: ["<gray>Crystal-Ausrüstung"]
+    size: 1
+    enchants: {PROTECTION: 4, UNBREAKING: 3, MENDING: 1}
+  crystal_leggings:
+    material: NETHERITE_LEGGINGS
+    name: "<light_purple><bold>Crystal Hose"
+    lore: ["<gray>Crystal-Ausrüstung"]
+    size: 1
+    enchants: {PROTECTION: 4, UNBREAKING: 3, MENDING: 1}
+  crystal_boots:
+    material: NETHERITE_BOOTS
+    name: "<light_purple><bold>Crystal Stiefel"
+    lore: ["<gray>Crystal-Ausrüstung"]
+    size: 1
+    enchants: {PROTECTION: 4, UNBREAKING: 3, MENDING: 1, FEATHER_FALLING: 4, DEPTH_STRIDER: 3}
+  crystal_sword:
+    material: NETHERITE_SWORD
+    name: "<light_purple><bold>Crystal Schwert"
+    lore: ["<gray>Crystal-Ausrüstung"]
+    size: 1
+    enchants: {SHARPNESS: 5, LOOTING: 3, UNBREAKING: 3, MENDING: 1, SWEEPING_EDGE: 3}
+  crystal_axe:
+    material: NETHERITE_AXE
+    name: "<light_purple><bold>Crystal Axt"
+    lore: ["<gray>Crystal-Ausrüstung"]
+    size: 1
+    enchants: {SHARPNESS: 5, EFFICIENCY: 5, UNBREAKING: 3, MENDING: 1}
+  crystal_pickaxe:
+    material: NETHERITE_PICKAXE
+    name: "<light_purple><bold>Crystal Spitzhacke"
+    lore: ["<gray>Crystal-Ausrüstung"]
+    size: 1
+    enchants: {EFFICIENCY: 5, FORTUNE: 3, UNBREAKING: 3, MENDING: 1}
