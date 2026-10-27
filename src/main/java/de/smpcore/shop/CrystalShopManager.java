@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.*;
 
 public final class CrystalShopManager {
-    public record Entry(Material icon, String name, long cost, String type, String value, int amount, List<String> lore) {}
+    public record Entry(Material icon, String name, long cost, String type, String value, int amount, List<String> lore, int slot) {}
 
     private final SMPCore plugin;
     private final String fileName;
@@ -40,13 +40,20 @@ public final class CrystalShopManager {
             String type = String.valueOf(m.get("type")).toUpperCase(Locale.ROOT);
             String value = String.valueOf(m.get("value"));
             int amount = m.get("amount") instanceof Number a ? a.intValue() : 1;
+            int slot = m.get("slot") instanceof Number sn ? sn.intValue() : -1;
             List<String> lore = new ArrayList<>();
             if (m.get("lore") instanceof List<?> l) for (Object o : l) lore.add(String.valueOf(o));
-            entries.add(new Entry(icon, String.valueOf(m.get("name")), cn.longValue(), type, value, Math.max(1, amount), lore));
+            entries.add(new Entry(icon, String.valueOf(m.get("name")), cn.longValue(), type, value, Math.max(1, amount), lore, slot));
         }
     }
 
     public List<Entry> entries() { return entries; }
+
+    /** true, wenn die Einträge feste Slots haben (Crystal-Store-Layout). */
+    public boolean hasLayout() {
+        for (Entry e : entries) if (e.slot() >= 0) return true;
+        return false;
+    }
 
     public void purchase(Player p, Entry e) {
         UUID id = p.getUniqueId();
