@@ -1,9 +1,11 @@
-# Shop im HugoSMP-Look: 3 Reihen, Kategorien in der Mitte (Slots 11-15), kein Füll-Glas.
+# Shop im HugoSMP-Look. Hauptmenü: 3 Reihen, Kategorien mittig (Slots 11-15), kein Füll-Glas.
+# Unterseiten: Titel in Cyan, bis zu 9 Items in der mittleren Reihe (mehr = automatisch weitere Seiten),
+# rote Glasscheibe unten mittig = Zurück.
 # buy = Kaufpreis pro Stück (0 = nicht kaufbar), sell = Verkaufspreis (0 = nicht verkaufbar)
-# locked: true = nur Anzeige (z.B. "bald verfügbar"), slot = Position im Hauptmenü (0-26)
+# locked: true = nur Anzeige (gesperrt, z.B. Barrier), slot = Position im Hauptmenü (0-26)
 categories:
   locked:
-    name: "<red>Bald verfügbar"
+    name: "<red>Gesperrt"
     icon: BARRIER
     slot: 11
     locked: true
@@ -13,50 +15,43 @@ categories:
     icon: NETHERRACK
     slot: 12
     items:
-      - {material: NETHERRACK, buy: 2, sell: 0.5}
-      - {material: NETHER_BRICKS, buy: 6, sell: 2}
-      - {material: QUARTZ, buy: 20, sell: 8}
-      - {material: GLOWSTONE, buy: 30, sell: 10}
-      - {material: NETHER_WART, buy: 15, sell: 5}
       - {material: BLAZE_ROD, buy: 100, sell: 40}
+      - {material: NETHER_WART, buy: 15, sell: 5}
+      - {material: GLOWSTONE_DUST, buy: 12, sell: 4}
       - {material: MAGMA_CREAM, buy: 60, sell: 20}
+      - {material: GHAST_TEAR, buy: 250, sell: 100}
+      - {material: QUARTZ, buy: 20, sell: 8}
       - {material: SOUL_SAND, buy: 8, sell: 3}
-      - {material: ANCIENT_DEBRIS, buy: 3000, sell: 1200}
-      - {material: NETHERITE_SCRAP, buy: 2500, sell: 1000}
-  pvp:
-    name: "<gold>PvP"
+      - {material: MAGMA_BLOCK, buy: 30, sell: 10}
+      - {material: CRYING_OBSIDIAN, buy: 150, sell: 50}
+  ausruestung:
+    name: "<gold>Ausrüstung"
     icon: TOTEM_OF_UNDYING
     slot: 13
     items:
+      - {material: OBSIDIAN, buy: 80, sell: 30}
+      - {material: GLOWSTONE, buy: 30, sell: 10}
       - {material: TOTEM_OF_UNDYING, buy: 20000, sell: 0}
-      - {material: GOLDEN_APPLE, buy: 600, sell: 200}
-      - {material: ENCHANTED_GOLDEN_APPLE, buy: 15000, sell: 0}
       - {material: ENDER_PEARL, buy: 150, sell: 50}
+      - {material: GOLDEN_APPLE, buy: 600, sell: 200}
       - {material: EXPERIENCE_BOTTLE, buy: 120, sell: 0}
-      - {material: ARROW, buy: 5, sell: 1}
+      - {material: ENDER_CHEST, buy: 500, sell: 0}
       - {material: SHIELD, buy: 250, sell: 0}
-      - {material: DIAMOND_SWORD, buy: 1500, sell: 0}
-      - {material: DIAMOND_CHESTPLATE, buy: 3000, sell: 0}
-      - {material: DIAMOND_HELMET, buy: 2500, sell: 0}
-      - {material: DIAMOND_LEGGINGS, buy: 2800, sell: 0}
-      - {material: DIAMOND_BOOTS, buy: 2000, sell: 0}
-      - {material: ELYTRA, buy: 50000, sell: 0}
-      - {material: TNT, buy: 200, sell: 0}
+      - {material: ARROW, buy: 5, sell: 1}
   food:
     name: "<yellow>Essen"
     icon: BREAD
     slot: 14
     items:
-      - {material: BREAD, buy: 15, sell: 5}
-      - {material: COOKED_BEEF, buy: 25, sell: 10}
-      - {material: COOKED_PORKCHOP, buy: 25, sell: 10}
-      - {material: COOKED_CHICKEN, buy: 20, sell: 8}
-      - {material: GOLDEN_CARROT, buy: 60, sell: 20}
-      - {material: WHEAT, buy: 8, sell: 3}
-      - {material: CARROT, buy: 8, sell: 3}
       - {material: POTATO, buy: 8, sell: 3}
-      - {material: SUGAR_CANE, buy: 8, sell: 3}
-      - {material: PUMPKIN, buy: 12, sell: 4}
+      - {material: SWEET_BERRIES, buy: 6, sell: 2}
+      - {material: MELON_SLICE, buy: 5, sell: 2}
+      - {material: CARROT, buy: 8, sell: 3}
+      - {material: BREAD, buy: 15, sell: 5}
+      - {material: APPLE, buy: 12, sell: 4}
+      - {material: COOKED_CHICKEN, buy: 20, sell: 8}
+      - {material: COOKED_BEEF, buy: 25, sell: 10}
+      - {material: BAKED_POTATO, buy: 12, sell: 5}
   special:
     name: "<light_purple>Spezial"
     icon: NETHER_STAR
@@ -69,10 +64,10 @@ categories:
       - {material: LAPIS_LAZULI, buy: 15, sell: 6}
       - {material: DIAMOND, buy: 400, sell: 180}
       - {material: EMERALD, buy: 300, sell: 130}
-      - {material: OBSIDIAN, buy: 80, sell: 30}
+      - {material: ANCIENT_DEBRIS, buy: 3000, sell: 1200}
+      - {material: NETHERITE_SCRAP, buy: 2500, sell: 1000}
       - {material: SHULKER_SHELL, buy: 1500, sell: 500}
       - {material: BONE, buy: 10, sell: 4}
       - {material: GUNPOWDER, buy: 40, sell: 15}
       - {material: STRING, buy: 10, sell: 4}
       - {material: SLIME_BALL, buy: 40, sell: 15}
-      - {material: ROTTEN_FLESH, buy: 4, sell: 1}
