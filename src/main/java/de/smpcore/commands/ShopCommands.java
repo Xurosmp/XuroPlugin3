@@ -25,7 +25,10 @@ public final class ShopCommands implements TabExecutor {
         if (!plugin.feature("shop")) { Msg.error(s, "Der Shop ist derzeit deaktiviert."); return true; }
         switch (c.getName().toLowerCase(Locale.ROOT)) {
             case "shop" -> ShopMenus.openMain(p);
-            case "crystalshop" -> new CrystalShopMenu(p, false).open();
+            case "crystalshop" -> {
+                if (plugin.crystalShop().hasLayout()) new de.smpcore.gui.CrystalStoreMenu(p).open();
+                else new CrystalShopMenu(p, false).open();
+            }
             case "gemshop" -> new CrystalShopMenu(p, true).open();
             case "sell" -> {
                 if (a.length == 0) { Msg.send(p, "Nutzung: <white>/sell hand <gray>oder <white>/sell all"); return true; }
