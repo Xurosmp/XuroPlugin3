@@ -17,6 +17,7 @@ import de.smpcore.scoreboard.ScoreboardManager;
 import de.smpcore.shop.CrystalShopManager;
 import de.smpcore.shop.ShopManager;
 import de.smpcore.spawner.SpawnerManager;
+import de.smpcore.tab.TabManager;
 import de.smpcore.teleport.TeleportManager;
 import de.smpcore.tools.ToolManager;
 import de.smpcore.util.Msg;
@@ -40,6 +41,7 @@ public final class SMPCore extends JavaPlugin {
     private CrystalShopManager gemShop;
     private ClanManager clans;
     private AfkManager afk;
+    private TabManager tab;
     private AuctionManager auctions;
     private BountyManager bounties;
     private CrateManager crates;
@@ -58,6 +60,7 @@ public final class SMPCore extends JavaPlugin {
     public CrystalShopManager gemShop() { return gemShop; }
     public ClanManager clans() { return clans; }
     public AfkManager afk() { return afk; }
+    public TabManager tab() { return tab; }
     public AuctionManager auctions() { return auctions; }
     public BountyManager bounties() { return bounties; }
     public CrateManager crates() { return crates; }
@@ -92,6 +95,7 @@ public final class SMPCore extends JavaPlugin {
         clans = new ClanManager(this);
         clans.load();
         afk = new AfkManager(this);
+        tab = new TabManager(this);
         auctions = new AuctionManager(this);
         auctions.load();
         bounties = new BountyManager(this);
@@ -141,6 +145,7 @@ public final class SMPCore extends JavaPlugin {
         crates.startParticles();
         keyall.start();
         afk.start();
+        tab.start();
         long ticks = 20L * spawners.intervalSeconds();
         getServer().getScheduler().runTaskTimer(this, () -> spawners.tick(), ticks, ticks);
         getServer().getScheduler().runTaskTimer(this, () -> saveAll(true), 20L * 300, 20L * 300);
