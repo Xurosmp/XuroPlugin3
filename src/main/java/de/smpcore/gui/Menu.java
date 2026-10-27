@@ -69,7 +69,7 @@ public abstract class Menu implements InventoryHolder {
     /** Bestimmt den Chat-Prefix (z.B. "AH", "SHOP") für Nachrichten aus diesem Menü. */
     protected String tag() {
         String n = getClass().getName();
-        if (n.contains("CrystalShop")) return "crystalshop";
+        if (n.contains("CrystalShop") || n.contains("CrystalStore")) return "crystalshop";
         if (n.contains("ShopMenus")) return "shop";
         if (n.contains("AuctionMenus")) return "ah";
         if (n.contains("BountyMenu")) return "bounty";
