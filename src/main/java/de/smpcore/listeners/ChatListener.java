@@ -21,6 +21,7 @@ public final class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onChat(AsyncChatEvent e) {
+        if (e.isCancelled()) return;
         Player p = e.getPlayer();
         ClanManager.Clan clan = plugin.clans().of(p.getUniqueId());
 
