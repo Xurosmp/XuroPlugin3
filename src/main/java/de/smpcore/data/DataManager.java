@@ -49,6 +49,8 @@ public final class DataManager {
                 d.rank = c.getString("rank");
                 ConfigurationSection k = c.getConfigurationSection("keys");
                 if (k != null) for (String crate : k.getKeys(false)) d.keys.put(crate, k.getInt(crate));
+                ConfigurationSection kt = c.getConfigurationSection("kits");
+                if (kt != null) for (String kid : kt.getKeys(false)) d.kitUsed.put(kid, kt.getLong(kid));
                 ConfigurationSection h = c.getConfigurationSection("homes");
                 if (h != null) for (String n : h.getKeys(false)) d.homes.put(n, h.getString(n, ""));
                 players.put(id, d);
@@ -83,6 +85,7 @@ public final class DataManager {
             if (d.rank != null) y.set(b + "rank", d.rank);
             d.keys.forEach((k, v) -> { if (v > 0) y.set(b + "keys." + k, v); });
             d.homes.forEach((k, v) -> y.set(b + "homes." + k, v));
+            d.kitUsed.forEach((k, v) -> y.set(b + "kits." + k, v));
         }
         Persist.write(plugin, playersFile, y.saveToString(), async);
 
