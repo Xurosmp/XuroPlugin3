@@ -80,6 +80,9 @@ commands:
     description: AFK-Zone (Kristalle verdienen)
   clan:
     description: Clan-System
+  order:
+    description: Orders (Kaufaufträge)
+    aliases: [orders]
   spawner:
     description: Smart-Spawner geben (Admin)
     permission: smpcore.admin
