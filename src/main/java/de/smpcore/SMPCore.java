@@ -1,6 +1,7 @@
 package de.smpcore;
 
 import de.smpcore.afk.AfkManager;
+import de.smpcore.announcer.Announcer;
 import de.smpcore.auction.AuctionManager;
 import de.smpcore.bounty.BountyManager;
 import de.smpcore.clan.ClanManager;
@@ -10,6 +11,9 @@ import de.smpcore.data.DataManager;
 import de.smpcore.data.PlayerData;
 import de.smpcore.economy.EconomyManager;
 import de.smpcore.gui.MenuListener;
+import de.smpcore.gui.SignInput;
+import de.smpcore.kit.KitManager;
+import de.smpcore.warp.WarpManager;
 import de.smpcore.keyall.KeyallManager;
 import de.smpcore.order.OrderManager;
 import de.smpcore.listeners.*;
@@ -44,6 +48,10 @@ public final class SMPCore extends JavaPlugin {
     private AfkManager afk;
     private TabManager tab;
     private OrderManager orders;
+    private WarpManager warps;
+    private KitManager kits;
+    private Announcer announcer;
+    private final java.util.Set<java.util.UUID> vanished = new java.util.HashSet<>();
     private AuctionManager auctions;
     private BountyManager bounties;
     private CrateManager crates;
@@ -64,6 +72,9 @@ public final class SMPCore extends JavaPlugin {
     public AfkManager afk() { return afk; }
     public TabManager tab() { return tab; }
     public OrderManager orders() { return orders; }
+    public WarpManager warps() { return warps; }
+    public KitManager kits() { return kits; }
+    public java.util.Set<java.util.UUID> vanished() { return vanished; }
     public AuctionManager auctions() { return auctions; }
     public BountyManager bounties() { return bounties; }
     public CrateManager crates() { return crates; }
@@ -80,7 +91,7 @@ public final class SMPCore extends JavaPlugin {
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
-        for (String f : new String[]{"shop.yml", "crates.yml", "crystalshop.yml", "ranks.yml", "spawners.yml", "tools.yml", "gemshop.yml"}) {
+        for (String f : new String[]{"shop.yml", "crates.yml", "crystalshop.yml", "ranks.yml", "spawners.yml", "tools.yml", "gemshop.yml", "kits.yml"}) {
             if (!new File(getDataFolder(), f).exists()) saveResource(f, false);
         }
         Msg.configure(getConfig());
@@ -100,6 +111,11 @@ public final class SMPCore extends JavaPlugin {
         orders = new OrderManager(this);
         orders.load();
         orders.expire();
+        warps = new WarpManager(this);
+        warps.load();
+        kits = new KitManager(this);
+        kits.load();
+        announcer = new Announcer(this);
         afk = new AfkManager(this);
         tab = new TabManager(this);
         auctions = new AuctionManager(this);
@@ -131,6 +147,8 @@ public final class SMPCore extends JavaPlugin {
         reg("rank", new RankCommand(this));
         reg("clan", new ClanCommand(this));
         reg("order", new OrderCommand(this));
+        UtilityCommands uc = new UtilityCommands(this);
+        for (String n : new String[]{"back", "warp", "setwarp", "delwarp", "kit", "msg", "r", "heal", "feed", "fly", "craft", "ec", "trash", "vanish"}) reg(n, uc);
         reg("afk", new AfkCommand(this));
         SpawnerCommand spc = new SpawnerCommand(this);
         reg("spawner", spc);
@@ -147,12 +165,14 @@ public final class SMPCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SpawnerListener(this), this);
         getServer().getPluginManager().registerEvents(new ToolListener(this), this);
         getServer().getPluginManager().registerEvents(new ClanListener(this), this);
+        getServer().getPluginManager().registerEvents(new SignInput(), this);
 
         scoreboards.start();
         crates.startParticles();
         keyall.start();
         afk.start();
         tab.start();
+        announcer.start();
         long ticks = 20L * spawners.intervalSeconds();
         getServer().getScheduler().runTaskTimer(this, () -> spawners.tick(), ticks, ticks);
         getServer().getScheduler().runTaskTimer(this, () -> saveAll(true), 20L * 300, 20L * 300);
@@ -168,6 +188,7 @@ public final class SMPCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        SignInput.cleanup();
         if (scoreboards != null) scoreboards.shutdown();
         if (ranks != null) for (Player p : getServer().getOnlinePlayers()) ranks.remove(p);
         if (data != null) saveAll(false);
@@ -213,6 +234,8 @@ public final class SMPCore extends JavaPlugin {
         ranks.load();
         spawners.loadConfig();
         tools.load();
+        kits.load();
+        warps.load();
         keyall.reset();
     }
 
