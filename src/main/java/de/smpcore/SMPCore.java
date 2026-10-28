@@ -11,6 +11,7 @@ import de.smpcore.data.PlayerData;
 import de.smpcore.economy.EconomyManager;
 import de.smpcore.gui.MenuListener;
 import de.smpcore.keyall.KeyallManager;
+import de.smpcore.order.OrderManager;
 import de.smpcore.listeners.*;
 import de.smpcore.rank.RankManager;
 import de.smpcore.scoreboard.ScoreboardManager;
@@ -42,6 +43,7 @@ public final class SMPCore extends JavaPlugin {
     private ClanManager clans;
     private AfkManager afk;
     private TabManager tab;
+    private OrderManager orders;
     private AuctionManager auctions;
     private BountyManager bounties;
     private CrateManager crates;
@@ -61,6 +63,7 @@ public final class SMPCore extends JavaPlugin {
     public ClanManager clans() { return clans; }
     public AfkManager afk() { return afk; }
     public TabManager tab() { return tab; }
+    public OrderManager orders() { return orders; }
     public AuctionManager auctions() { return auctions; }
     public BountyManager bounties() { return bounties; }
     public CrateManager crates() { return crates; }
@@ -94,6 +97,9 @@ public final class SMPCore extends JavaPlugin {
         gemShop.load();
         clans = new ClanManager(this);
         clans.load();
+        orders = new OrderManager(this);
+        orders.load();
+        orders.expire();
         afk = new AfkManager(this);
         tab = new TabManager(this);
         auctions = new AuctionManager(this);
@@ -124,6 +130,7 @@ public final class SMPCore extends JavaPlugin {
         for (String n : new String[]{"adminpanel", "smpcore", "keyall"}) reg(n, ac);
         reg("rank", new RankCommand(this));
         reg("clan", new ClanCommand(this));
+        reg("order", new OrderCommand(this));
         reg("afk", new AfkCommand(this));
         SpawnerCommand spc = new SpawnerCommand(this);
         reg("spawner", spc);
@@ -149,6 +156,7 @@ public final class SMPCore extends JavaPlugin {
         long ticks = 20L * spawners.intervalSeconds();
         getServer().getScheduler().runTaskTimer(this, () -> spawners.tick(), ticks, ticks);
         getServer().getScheduler().runTaskTimer(this, () -> saveAll(true), 20L * 300, 20L * 300);
+        getServer().getScheduler().runTaskTimer(this, () -> orders.expire(), 20L * 60, 20L * 60 * 5);
         getServer().getScheduler().runTaskTimer(this, () -> playtimeTick(), 20L * 60, 20L * 60);
         for (Player p : getServer().getOnlinePlayers()) {
             data.getOrCreate(p.getUniqueId(), p.getName());
@@ -191,6 +199,7 @@ public final class SMPCore extends JavaPlugin {
         bounties.save(async);
         spawners.save(async);
         clans.save(async);
+        orders.save(async);
     }
 
     public void reloadAll() {
