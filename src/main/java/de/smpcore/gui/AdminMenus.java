@@ -479,7 +479,7 @@ public final class AdminMenus {
     // ------------------------------------------------------------ Server-Tools
     public static final class Tools extends Menu {
         private static final String[][] FEATURES = {
-                {"shop", "Shop"}, {"auction", "Auktionshaus"}, {"bounty", "Kopfgelder"}, {"crates", "Crates"}, {"scoreboard", "Scoreboard"}};
+                {"shop", "Shop"}, {"auction", "Auktionshaus"}, {"bounty", "Kopfgelder"}, {"crates", "Crates"}, {"scoreboard", "Scoreboard"}, {"orders", "Orders"}};
 
         public Tools(Player v) { super(v, 36, "<red>Admin » Server-Tools"); }
         @Override protected boolean allowed() { return admin(viewer); }
@@ -498,7 +498,7 @@ public final class AdminMenus {
                 });
             }
             boolean maint = plugin.getConfig().getBoolean("maintenance", false);
-            set(15, Items.make(maint ? Material.BARRIER : Material.OAK_DOOR, maint ? "<red>Wartungsmodus AN" : "<green>Wartungsmodus AUS",
+            set(16, Items.make(maint ? Material.BARRIER : Material.OAK_DOOR, maint ? "<red>Wartungsmodus AN" : "<green>Wartungsmodus AUS",
                     "<gray>AN = nur Admins dürfen joinen", "<gray>Klicken zum Umschalten"), e -> {
                 plugin.getConfig().set("maintenance", !maint);
                 plugin.saveConfig();
