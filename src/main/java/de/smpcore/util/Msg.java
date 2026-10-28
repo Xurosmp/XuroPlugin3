@@ -31,7 +31,7 @@ public final class Msg {
 
     private static String limit(String raw) {
         String plain = raw.replaceAll("<[^>]*>", "");
-        return plain.length() <= 4 ? raw : plain.substring(0, 4);
+        return plain.length() <= 5 ? raw : plain.substring(0, 5);
     }
 
     public static void use(String key) { current = key == null ? "default" : key.toLowerCase(Locale.ROOT); }
