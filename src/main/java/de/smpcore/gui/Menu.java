@@ -77,6 +77,7 @@ public abstract class Menu implements InventoryHolder {
         if (n.contains("CrateMenus")) return "crate";
         if (n.contains("SpawnerMenus")) return "spawner";
         if (n.contains("ClanMenus")) return "clan";
+        if (n.contains("OrderMenus")) return "order";
         if (n.contains("AdminMenus")) return "adminpanel";
         return "default";
     }
