@@ -36,6 +36,12 @@ public final class PlayerListener implements Listener {
         boolean first = plugin.data().get(p.getUniqueId()) == null;
         plugin.data().getOrCreate(p.getUniqueId(), p.getName());
         plugin.ranks().apply(p);
+        if (!p.hasPermission("smpcore.admin")) {
+            for (java.util.UUID v : plugin.vanished()) {
+                Player vp = org.bukkit.Bukkit.getPlayer(v);
+                if (vp != null) p.hidePlayer(plugin, vp);
+            }
+        }
         e.joinMessage(Msg.c("<dark_gray>[<green>+<dark_gray>] <gray>" + Msg.esc(p.getName())));
         if (first) {
             Location sp = plugin.data().spawn();
@@ -60,6 +66,7 @@ public final class PlayerListener implements Listener {
         PlayerData vd = plugin.data().get(victim.getUniqueId());
         if (vd != null) vd.deaths++;
         plugin.clans().addDeath(victim.getUniqueId());
+        if (vd != null) vd.lastLocation = victim.getLocation().clone();
         Player killer = victim.getKiller();
         if (killer == null || killer.equals(victim)) return;
         PlayerData kd = plugin.data().get(killer.getUniqueId());
