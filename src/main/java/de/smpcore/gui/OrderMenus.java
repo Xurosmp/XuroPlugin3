@@ -60,8 +60,8 @@ public final class OrderMenus {
                     e -> { SORT.put(viewer.getUniqueId(), sort.next()); page = 0; refresh(); });
             if (filter != null) set(47, Items.make(Material.BARRIER, "<red>Filter zurücksetzen"), e -> go(new Browse(viewer, null)));
             set(49, Items.make(Material.CHEST, "<aqua>Meine Orders", "<gray>Eigene Orders & Lieferungen abholen"), e -> go(new Mine(viewer)));
-            set(51, Items.make(Material.PAPER, "<green>Neue Order erstellen", "<white>/order create <Item> <Menge> <Preis>",
-                    "<gray>Mit Item in der Hand: <white>/order create hand <Menge> <Preis>", "<gray>Suchen: <white>/order search <Item>"));
+            set(51, Items.make(Material.EMERALD, "<green>Neue Order erstellen", "<gray>Item auswählen, Menge und Preis per Schild eingeben", "",
+                    "<yellow>Klicken", "<dark_gray>Oder: /order create <Item> <Menge> <Preis>"), e -> OrderCreateMenus.start(viewer));
             set(52, Items.make(Material.BARRIER, "<red>Schließen"), e -> closeLater());
         }
     }
@@ -131,7 +131,7 @@ public final class OrderMenus {
         @Override
         protected void controls() {
             set(49, Items.make(Material.ARROW, "<red>Zurück"), e -> go(new Browse(viewer, null)));
-            set(51, Items.make(Material.PAPER, "<green>Neue Order erstellen", "<white>/order create <Item> <Menge> <Preis>"));
+            set(51, Items.make(Material.EMERALD, "<green>Neue Order erstellen", "<yellow>Klicken"), e -> OrderCreateMenus.start(viewer));
         }
     }
 }
