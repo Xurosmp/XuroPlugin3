@@ -23,6 +23,12 @@ public final class TeleportManager {
 
     public TeleportManager(SMPCore plugin) { this.plugin = plugin; }
 
+    private void doTeleport(Player p, Location dest) {
+        de.smpcore.data.PlayerData d = plugin.data().get(p.getUniqueId());
+        if (d != null) d.lastLocation = p.getLocation().clone();
+        p.teleportAsync(dest);
+    }
+
     public void cancel(Player p) {
         BukkitTask t = pending.remove(p.getUniqueId());
         if (t != null) t.cancel();
@@ -32,7 +38,7 @@ public final class TeleportManager {
         int delay = plugin.getConfig().getInt("teleport.delay-seconds", 3);
         cancel(p);
         if (delay <= 0 || p.hasPermission("smpcore.tp.bypass")) {
-            p.teleportAsync(dest);
+            doTeleport(p, dest);
             p.sendActionBar(Msg.c("<green>Teleportiert: <white>" + Msg.esc(label)));
             return;
         }
@@ -53,7 +59,7 @@ public final class TeleportManager {
                 if (left <= 0) {
                     pending.remove(p.getUniqueId());
                     cancel();
-                    p.teleportAsync(dest);
+                    doTeleport(p, dest);
                     p.sendActionBar(Msg.c("<green>Teleportiert: <white>" + Msg.esc(label)));
                     p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 0.7f, 1f);
                     return;
