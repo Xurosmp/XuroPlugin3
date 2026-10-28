@@ -1,5 +1,7 @@
 package de.smpcore.data;
 
+import org.bukkit.Location;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,6 +19,8 @@ public final class PlayerData {
     public int dailyStreak;
     public boolean scoreboardOff;
     public String rank; // null = Standard-Rang
+    public final Map<String, Long> kitUsed = new HashMap<>();
+    public Location lastLocation; // für /back (nicht gespeichert)
     public final Map<String, Integer> keys = new HashMap<>();
     public final Map<String, String> homes = new LinkedHashMap<>();
 
