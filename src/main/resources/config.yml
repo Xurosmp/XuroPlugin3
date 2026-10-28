@@ -3,35 +3,32 @@ server-name: "XUROSMP"          # Platzhalter %server%
 server-ip: "xurosmp.daronlo.com" # Platzhalter %ip% (klein) und %IP% (GROSS) in Scoreboard und TAB
 number-comma: true              # true = 48,64M (deutsch) | false = 48.64M
 
-# Chat-Prefix pro Befehl: "AH ▸", "HOME ▸" ... (maximal 4 Zeichen, MiniMessage-Farben erlaubt)
+# Chat-Prefix pro Befehl: "AH ▸", "HOME ▸", "ORDER ▸" ... (maximal 5 Zeichen, MiniMessage-Farben erlaubt)
 # Bedrock-Hinweis: Falls "▸" bei Bedrock-Spielern nicht angezeigt wird, hier z.B. auf "»" ändern.
 prefix-format: "<green><bold>%tag%</bold> <dark_gray>▸ <gray>"
 prefixes:
   default: "SMP"
-  balance: "COIN"
+  balance: "MONEY"
   pay: "PAY"
   eco: "ECO"
-  crystals: "KRIS"
+  crystals: "STARS"
+  crystalshop: "STARS"
   gems: "GEMS"
   gemshop: "GEMS"
-  afk: "AFK"
-  clan: "CLAN"
-  order: "ORD"
   top: "TOP"
   shop: "SHOP"
   sell: "SELL"
-  crystalshop: "KRIS"
   ah: "AH"
   bounty: "BNTY"
   crate: "KEYS"
-  keyall: "KEY"
-  adminpanel: "ADM"
+  keyall: "KEYS"
+  adminpanel: "ADMIN"
   smpcore: "SMP"
   rank: "RANK"
-  spawner: "SPWN"
+  spawner: "SPAWN"
   tool: "TOOL"
-  spawn: "SPWN"
-  setspawn: "SPWN"
+  spawn: "SPAWN"
+  setspawn: "SPAWN"
   sethome: "HOME"
   home: "HOME"
   delhome: "HOME"
@@ -40,9 +37,27 @@ prefixes:
   tpaccept: "TPA"
   tpdeny: "TPA"
   rtp: "RTP"
-  daily: "DAY"
-  stats: "STAT"
+  daily: "DAILY"
+  stats: "STATS"
   scoreboard: "SB"
+  afk: "AFK"
+  clan: "CLAN"
+  order: "ORDER"
+  warp: "WARP"
+  setwarp: "WARP"
+  delwarp: "WARP"
+  kit: "KIT"
+  back: "BACK"
+  msg: "MSG"
+  r: "MSG"
+  heal: "HEAL"
+  feed: "FEED"
+  fly: "FLY"
+  craft: "CRAFT"
+  ec: "EC"
+  trash: "TRASH"
+  vanish: "HIDE"
+  info: "INFO"
 
 # Floodgate/Geyser: Prefix für Bedrock-Namen (Standard ".")
 bedrock-prefix: "."
@@ -126,6 +141,7 @@ daily:
 
 # Orders (Kaufaufträge): /order. Geld wird beim Erstellen reserviert, Lieferanten werden sofort bezahlt.
 orders:
+  input: SIGN            # SIGN = Eingabe per Schild (auch Bedrock), CHAT = per Chat
   max-per-player: 5
   duration-hours: 72
   min-price: 0.01
@@ -139,16 +155,25 @@ tab:
   nametag-prefix: true
   header:
     - ""
-    - "<gradient:#ff5555:#ffaa00><bold>XUROSMP</bold></gradient>"
-    - "<gray>Willkommen, <white>%player%"
+    - "<aqua><bold>⚔ %server% ⚔"
+    - ""
+    - "<green>%online% Spieler <gray>(%ping%ms)"
     - ""
   footer:
     - ""
-    - "<gray>Online: <green>%online%<dark_gray>/<green>%max% <dark_gray>| <gray>Ping: <aqua>%ping%ms"
-    - "<green>%money% <dark_gray>| <light_purple>%gems% Gems <dark_gray>| <yellow>%crystals% Kristalle"
+    - "<white><bold>%IP%"
     - ""
-    - "<red><bold>%IP%"
-    - ""
+
+# Announcer: automatische Chat-Nachrichten
+announcer:
+  enabled: true
+  interval-seconds: 300
+  messages:
+    - "<yellow>Tipp: <gray>Mit <white>/afk <gray>verdienst du Kristalle in der AFK-Zone!"
+    - "<yellow>Tipp: <gray>Im <white>/shop <gray>kannst du kaufen und verkaufen."
+    - "<yellow>Tipp: <gray>Mit <white>/order <gray>bestellst du Items zu deinem Preis."
+    - "<yellow>Tipp: <gray>Gründe einen Clan mit <white>/clan<gray>!"
+    - "<yellow>Tipp: <gray>Hol dir kostenlose Kits mit <white>/kit<gray>."
 
 # Scoreboard exakt im HugoSMP-Look (Reihenfolge wie im Original).
 # Die Symbole sind normale Unicode-Zeichen. Mit einem Resource-Pack kannst du sie durch eigene Icons ersetzen.
