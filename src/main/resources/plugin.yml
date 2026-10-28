@@ -83,6 +83,42 @@ commands:
   order:
     description: Orders (Kaufaufträge)
     aliases: [orders]
+  back:
+    description: Zum letzten Ort / Todesort
+  warp:
+    description: Warps (Menü oder /warp <Name>)
+    aliases: [warps]
+  setwarp:
+    description: Warp setzen (Admin)
+  delwarp:
+    description: Warp löschen (Admin)
+  kit:
+    description: Kits
+    aliases: [kits]
+  msg:
+    description: Private Nachricht
+    aliases: [w, tell, m, pm]
+  r:
+    description: Auf private Nachricht antworten
+    aliases: [reply]
+  heal:
+    description: Heilen
+  feed:
+    description: Sättigen
+  fly:
+    description: Fliegen an/aus
+  craft:
+    description: Werkbank öffnen
+    aliases: [wb]
+  ec:
+    description: Endertruhe öffnen
+    aliases: [enderchest]
+  trash:
+    description: Mülleimer
+    aliases: [bin]
+  vanish:
+    description: Unsichtbar (Admin)
+    aliases: [v]
   spawner:
     description: Smart-Spawner geben (Admin)
     permission: smpcore.admin
