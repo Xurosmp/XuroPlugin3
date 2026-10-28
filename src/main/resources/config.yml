@@ -16,6 +16,7 @@ prefixes:
   gemshop: "GEMS"
   afk: "AFK"
   clan: "CLAN"
+  order: "ORD"
   top: "TOP"
   shop: "SHOP"
   sell: "SELL"
@@ -59,6 +60,7 @@ features:
   bounty: true
   crates: true
   scoreboard: true
+  orders: true
 
 economy:
   starting-money: 1000
@@ -122,6 +124,14 @@ daily:
   max-streak: 7
   crystals: 0          # Kristalle sind AFK-Währung, daher standardmäßig 0
 
+# Orders (Kaufaufträge): /order. Geld wird beim Erstellen reserviert, Lieferanten werden sofort bezahlt.
+orders:
+  max-per-player: 5
+  duration-hours: 72
+  min-price: 0.01
+  max-amount: 2304
+  blacklist: [BEDROCK, BARRIER, COMMAND_BLOCK, CHAIN_COMMAND_BLOCK, REPEATING_COMMAND_BLOCK, STRUCTURE_BLOCK, STRUCTURE_VOID, JIGSAW, DEBUG_STICK, SPAWNER, LIGHT]
+
 # Eigene TAB-Liste: Header/Footer, Name mit [CLAN] + Rang-Prefix, Sortierung nach Rang.
 # nametag-prefix: Rang-Prefix auch über dem Kopf. Platzhalter wie beim Scoreboard.
 tab:
@@ -140,20 +150,22 @@ tab:
     - "<red><bold>%IP%"
     - ""
 
-# Scoreboard im HugoSMP-Look
-# Platzhalter: %player% %money% %gems% %crystals% %kills% %deaths% %playtime% %online% %max% %bounty% %ping% %rank% %keyall% %clan% %server%
+# Scoreboard exakt im HugoSMP-Look (Reihenfolge wie im Original).
+# Die Symbole sind normale Unicode-Zeichen. Mit einem Resource-Pack kannst du sie durch eigene Icons ersetzen.
+# Hinweis: "Stars" zeigt die Kristalle (AFK-Währung). Platzhalter siehe unten.
+# Platzhalter: %player% %money% %gems% %crystals% %kills% %deaths% %playtime% %online% %max% %bounty% %ping% %rank% %keyall% %clan% %server% %ip% %IP%
 scoreboard:
   title: "<gradient:#ff5555:#ffaa00><bold>XUROSMP</bold></gradient>"
   lines:
-    - "<green>Geld <white>%money%"
-    - "<light_purple>Gems <white>%gems%"
-    - "<yellow>Kristalle <white>%crystals%"
-    - "<red>Kills <white>%kills%"
-    - "<dark_red>Tode <white>%deaths%"
-    - "<gold>Clan <white>%clan%"
-    - "<aqua>Ping <white>%ping%ms"
-    - "<yellow>Keyall <white>%keyall%"
-    - "<green>Spielzeit <white>%playtime%"
+    - "<green>$ <white>Geld <green>%money%"
+    - "<light_purple>♦ <white>Gems <light_purple>%gems%"
+    - "<yellow>★ <white>Stars <yellow>%crystals%"
+    - "<gray>⚔ <white>Kills <gold>%kills%"
+    - "<dark_red>☠ <white>Tode <red>%deaths%"
+    - "<gold>⚑ <white>Clan <yellow>%clan%"
+    - "<aqua>⚡ <white>Ping <green>%ping%ms"
+    - "<aqua>✦ <white>Keyall <aqua>%keyall%"
+    - "<green>⌚ <white>Spielzeit <green>%playtime%"
     - " "
     - "<red><bold>%IP%"
     - "<green>%online%/%max%"
