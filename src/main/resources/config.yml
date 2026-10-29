@@ -19,7 +19,7 @@ prefixes:
   shop: "SHOP"
   sell: "SELL"
   ah: "AH"
-  bounty: "BNTY"
+  bounty: "BOUNTY"
   crate: "KEYS"
   keyall: "KEYS"
   adminpanel: "ADMIN"
