@@ -1,0 +1,80 @@
+diff -ruN snap/src/main/java/de/smpcore/clan/ClanManager.java plugin/src/main/java/de/smpcore/clan/ClanManager.java
+--- snap/src/main/java/de/smpcore/clan/ClanManager.java	2026-10-31 08:01:45.948280674 +0000
++++ plugin/src/main/java/de/smpcore/clan/ClanManager.java	2026-10-31 08:01:55.029301011 +0000
+@@ -90,6 +90,17 @@
+         }
+     }
+ 
++    /** Ersetzt eine alte Spieler-UUID in allen Clans durch die neue (siehe data.migrate-by-name). */
++    public void migrate(UUID old, UUID now) {
++        boolean changed = false;
++        for (Clan c : clans.values()) {
++            if (c.leader.equals(old)) { c.leader = now; changed = true; }
++            Role r = c.members.remove(old);
++            if (r != null) { c.members.put(now, r); byPlayer.remove(old); byPlayer.put(now, c.id); changed = true; }
++        }
++        if (changed) save(true);
++    }
++
+     public void save(boolean async) {
+         YamlConfiguration y = new YamlConfiguration();
+         for (Clan c : clans.values()) {
+diff -ruN snap/src/main/java/de/smpcore/data/DataManager.java plugin/src/main/java/de/smpcore/data/DataManager.java
+--- snap/src/main/java/de/smpcore/data/DataManager.java	2026-10-31 08:01:45.948660713 +0000
++++ plugin/src/main/java/de/smpcore/data/DataManager.java	2026-10-31 08:01:55.028584843 +0000
+@@ -108,6 +108,9 @@
+ 
+     public PlayerData getOrCreate(UUID id, String name) {
+         PlayerData d = players.get(id);
++        if (d == null && plugin.getConfig().getBoolean("data.migrate-by-name", false)) {
++            d = migrateByName(id, name);
++        }
+         if (d == null) {
+             d = new PlayerData(id, name);
+             d.money = plugin.getConfig().getDouble("economy.starting-money", 1000);
+@@ -122,6 +125,30 @@
+         return d;
+     }
+ 
++    /**
++     * Notfall-Übernahme: Hat ein Spieler eine neue UUID (z.B. nach Wechsel von Online-/Offline-Modus oder Proxy),
++     * wird sein alter Eintrag über den Namen gefunden und auf die neue UUID umgeschrieben (inkl. Clan).
++     * Nur aktiv mit data.migrate-by-name: true in der config.yml. Danach wieder auf false stellen!
++     */
++    private PlayerData migrateByName(UUID id, String name) {
++        UUID old = names.get(name.toLowerCase(Locale.ROOT));
++        if (old == null || old.equals(id)) return null;
++        PlayerData od = players.remove(old);
++        if (od == null) return null;
++        PlayerData nd = new PlayerData(id, name);
++        nd.money = od.money; nd.crystals = od.crystals; nd.gems = od.gems;
++        nd.kills = od.kills; nd.deaths = od.deaths; nd.playtime = od.playtime;
++        nd.lastDaily = od.lastDaily; nd.dailyStreak = od.dailyStreak;
++        nd.scoreboardOff = od.scoreboardOff; nd.signDay = od.signDay; nd.signCount = od.signCount;
++        nd.rank = od.rank;
++        nd.kitUsed.putAll(od.kitUsed); nd.keys.putAll(od.keys); nd.homes.putAll(od.homes);
++        players.put(id, nd);
++        names.put(name.toLowerCase(Locale.ROOT), id);
++        plugin.clans().migrate(old, id);
++        plugin.getLogger().info("Daten von " + name + " von " + old + " auf " + id + " übernommen.");
++        return nd;
++    }
++
+     public PlayerData find(String name) {
+         String n = name.toLowerCase(Locale.ROOT);
+         UUID id = names.get(n);
+diff -ruN snap/src/main/resources/config.yml plugin/src/main/resources/config.yml
+--- snap/src/main/resources/config.yml	2026-10-31 08:01:45.952614619 +0000
++++ plugin/src/main/resources/config.yml	2026-10-31 08:01:55.029681180 +0000
+@@ -92,6 +92,11 @@
+   scoreboard: true
+   orders: true
+ 
++# Notfall: Spieler haben neue UUIDs (z.B. Online-/Offline-Modus gewechselt). true = alte Daten werden beim Join über den
++# Spielernamen übernommen. NUR kurz einschalten, danach wieder false (sonst kann jemand mit einem freien Namen fremde Daten erben).
++data:
++  migrate-by-name: false
++
+ economy:
+   starting-money: 1000
+   starting-crystals: 0     # Stars = AFK-Währung
