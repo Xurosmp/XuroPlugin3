@@ -94,7 +94,7 @@ public final class SMPCore extends JavaPlugin {
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
-        for (String f : new String[]{"shop.yml", "crates.yml", "crystalshop.yml", "ranks.yml", "spawners.yml", "tools.yml", "gemshop.yml", "kits.yml"}) {
+        for (String f : new String[]{"shop.yml", "crates.yml", "crystalshop.yml", "ranks.yml", "spawners.yml", "tools.yml", "gemshop.yml", "kits.yml", "sell.yml"}) {
             if (!new File(getDataFolder(), f).exists()) saveResource(f, false);
         }
         Msg.configure(getConfig());
